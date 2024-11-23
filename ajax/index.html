@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Sapa Menggunakan AJAX</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Form Sapa Menggunakan AJAX</h1>
+    <input type="text" id="name" placeholder="Masukkan nama Anda">
+    <button onclick="sendGreeting()">Kirim</button>
+    <div id="result" class="response"></div>
+
+    <script>
+        function sendGreeting() {
+            const name = document.getElementById("name").value.trim();
+
+            if (name === "") {
+                document.getElementById("result").innerText = "Nama tidak boleh kosong!";
+                return;
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "ajax_info.txt", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = xhr.responseText;
+                    document.getElementById("result").innerHTML = `Halo, ${name}. ${response}`;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
